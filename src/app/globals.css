@@ -1,6 +1,10 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 
 :root {
+  --primary: #67943f;
+  --primary-dark: #2c4319;
+  --secondary: #a4be3a;
+  --dark-blue: #161637;
   --bs-primary: #1a73e8;
   --bs-secondary: #6c757d;
   --bs-success: #28a745;

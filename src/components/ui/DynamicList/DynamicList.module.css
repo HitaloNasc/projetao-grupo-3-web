@@ -1,0 +1,10 @@
+.table {
+  border-spacing: 1rem 2rem;
+  border-collapse: separate;
+  width: 100%;
+}
+
+.table th {
+  text-align: left;
+  color: var(--primary);
+}

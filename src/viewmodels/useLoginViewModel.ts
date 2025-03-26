@@ -50,7 +50,7 @@ export function useLoginViewModel(authService: IAuthService) {
       setUser(null);
     } finally {
       setLoading(false);
-      router.replace("/home");
+      router.replace("/dashboard");
     }
   };
 
