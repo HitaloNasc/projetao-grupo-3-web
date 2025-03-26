@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export interface IConfirmModalViewModel {
-  handleOpenModal: (callback: () => Promise<void>) => void;
+  handleOpenModal: (callback: () => void) => void;
   handleCloseModal: () => void;
   handleSubmit: () => void;
   showModal: boolean;
@@ -10,11 +10,11 @@ export interface IConfirmModalViewModel {
 
 export function useConfirmModalViewModel(message: string) {
   const [showModal, setShowModal] = useState(false);
-  const [callback, setCallback] = useState<() => Promise<void>>(() =>
+  const [callback, setCallback] = useState<() => void>(() =>
     Promise.resolve()
   );
 
-  const handleOpenModal = (c: () => Promise<void>) => {
+  const handleOpenModal = (c: () => void) => {
     setShowModal(true);
     setCallback(() => c);
   };
