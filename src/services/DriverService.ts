@@ -12,7 +12,7 @@ export interface IDriverService {
 export class DriverService {
   async getDrivers(): Promise<Driver[]> {
     const res = await client.get<Driver[]>("/drivers");
-    return res.data;
+    return res.data?.map((driver: any) => ({ ...driver, id: driver._id }));
   }
 
   async createDriver(driver: DriverForm): Promise<Driver> {
@@ -21,7 +21,7 @@ export class DriverService {
   }
 
   async updateDriver(driver: DriverForm): Promise<Driver> {
-    const res = await client.put<Driver>(`/drivers/${driver.id}`, driver);
+    const res = await client.patch<Driver>(`/drivers/${driver.id}`, driver);
     return res.data;
   }
 
