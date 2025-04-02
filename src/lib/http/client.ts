@@ -2,7 +2,7 @@ import { AuthService } from "@/services/AuthService";
 import axios from "axios";
 
 export const client = axios.create({
-  baseURL: "http://147.79.110.94:4000",
+  baseURL: "http://api.top-drivers.srv603687.hstgr.cloud",
   timeout: 60000,
 });
 
