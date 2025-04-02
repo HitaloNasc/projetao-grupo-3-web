@@ -1,8 +1,7 @@
 import { User } from "@/models/User";
 import { IAuthService } from "@/services/AuthService";
-import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface ISidebarViewModel {
   selectedPage: string;
@@ -55,7 +54,7 @@ export function useSidebarViewModel(
   }, []);
 
   const logout = () => {
-    Cookies.remove("user");
+    authService.logout();
     router.push("/");
   };
 
