@@ -9,7 +9,17 @@ import { useDriverViewModel } from "@/viewmodels/useDriverViewModel";
 import { useRankingViewModel } from "@/viewmodels/useRankingViewModel";
 import { useSidebarViewModel } from "@/viewmodels/useSidebarViewModel";
 import { DriverView } from "@/views/Driver/DriverView";
+import { IndicatorsView } from "@/views/Indicators/IndicatorsView";
 import { RankingView } from "@/views/Ranking/RankingView";
+
+// Importando os ViewModels dos modais
+import { useAddIndicatorDataModalViewModel } from "@/viewmodels/modals/useAddIndicatorDataModalViewModel";
+import { useEditWeightsModalViewModel } from "@/viewmodels/modals/useEditWeightsModalViewModel";
+
+// Importando o hook de indicadores
+import { IndicatorService } from "@/services/IndicatorService";
+import { useAddIndicatorModalViewModel } from "@/viewmodels/modals/useAddIndicatorModalViewModel";
+import { useIndicatorsViewModel } from "@/viewmodels/useIndicatorsViewModel";
 
 export default function Dashboard() {
   const authService = new AuthService();
@@ -28,17 +38,34 @@ export default function Dashboard() {
     addEditDriverModalViewModel,
     confirmModalDriverViewModel
   );
+  const indicatorsService = new IndicatorService();
+
+  // Usando os ViewModels necessários para indicadores
+  const editWeightsModalViewModel =
+    useEditWeightsModalViewModel(indicatorsService);
+  const addIndicatorModalViewModel = useAddIndicatorModalViewModel();
+  const addIndicatorDataModal =
+    useAddIndicatorDataModalViewModel(indicatorsService);
+  const confirmModalViewModel = useConfirmModalViewModel("Tem certeza?");
+
+  // Passando os ViewModels para o hook de indicadores
+  const indicatorsViewModel = useIndicatorsViewModel(
+    editWeightsModalViewModel,
+    addIndicatorModalViewModel,
+    addIndicatorDataModal,
+    confirmModalViewModel
+  );
 
   let content = null;
   switch (sidebarViewModel.selectedPage) {
     case "ranking":
-      content = <RankingView {...rankingViewModel} />;
+      content = <RankingView key="ranking-tab" {...rankingViewModel} />;
       break;
     case "drivers":
-      content = <DriverView {...driverViewModel} />;
+      content = <DriverView key="drivers-tab" {...driverViewModel} />;
       break;
     case "indicators":
-      content = null;
+      content = <IndicatorsView key="indicators-tab" {...indicatorsViewModel} />;
       break;
     default:
       content = null;

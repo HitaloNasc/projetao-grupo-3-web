@@ -1,0 +1,38 @@
+.modalTitle {
+  color: var(--primary) !important;
+  font-weight: 800;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  gap: 2rem;
+}
+
+.modalContent span {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+}
+
+.modalContent p {
+  margin: 0;
+}
+
+.saveButton {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.saveButton:hover {
+  background-color: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+}
+
+.cancelButton {
+  color: var(--primary) !important;
+}

@@ -41,7 +41,6 @@ export function useDriverViewModel(
 
   const handleCreateDriver = useCallback(
     async (driver: DriverForm) => {
-      console.log("handleCreateDriver");
       setLoading(true);
       setError("");
       try {

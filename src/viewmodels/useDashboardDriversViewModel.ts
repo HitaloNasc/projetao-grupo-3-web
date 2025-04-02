@@ -34,8 +34,6 @@ export function useDashboardDriversViewModel(
     setError("");
 
     try {
-      console.log(currentUser);
-
       const ranking = await rankingService.getRanking(currentUser?.id || "");
       setRankings(ranking);
     } catch (err: any) {

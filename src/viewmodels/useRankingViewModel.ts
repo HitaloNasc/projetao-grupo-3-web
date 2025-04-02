@@ -1,3 +1,4 @@
+'use client';
 import { Ranking } from "@/models/Ranking";
 import { IRankingService } from "@/services/RankingService";
 import { useEffect, useState } from "react";
@@ -44,6 +45,8 @@ export function useRankingViewModel(rankingService: IRankingService) {
 
   useEffect(() => {
     getRankings();
+    console.log("mounted");
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

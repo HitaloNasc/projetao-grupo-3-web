@@ -1,0 +1,98 @@
+.title {  color: var(--primary);
+  font-weight: 800;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.indicator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  min-height: 2rem;
+  width: 50vw;
+}
+
+@media (max-width: 1000px) {
+  .indicator {
+    width: 30vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .indicator {
+    width: auto;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.editWeightsButton {
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: var(--primary);
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  color: #ffffff;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  border-radius: 20px;
+  gap: 0.5rem;
+}
+
+.editWeightsButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.addButton {
+  appearance: none;
+  border: none;
+  outline: none;
+  background-color: var(--primary);
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  color: #ffffff;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  border-radius: 20px;
+  gap: 0.5rem;
+}
+
+.editWeightsButton img {
+  filter: invert(1) brightness(2);
+}
+
+.addButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.editButton,
+.deleteButton {
+  padding: 0.5rem;
+  background-color: transparent;
+  cursor: pointer;
+}
