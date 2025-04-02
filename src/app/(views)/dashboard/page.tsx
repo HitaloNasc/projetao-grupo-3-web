@@ -13,11 +13,12 @@ import { IndicatorsView } from "@/views/Indicators/IndicatorsView";
 import { RankingView } from "@/views/Ranking/RankingView";
 
 // Importando os ViewModels dos modais
-import { useAddIndicatorModalViewModel } from "@/viewmodels/modals/useAddIndicatorModalViewModel";
+import { useAddIndicatorDataModalViewModel } from "@/viewmodels/modals/useAddIndicatorDataModalViewModel";
 import { useEditWeightsModalViewModel } from "@/viewmodels/modals/useEditWeightsModalViewModel";
 
 // Importando o hook de indicadores
 import { IndicatorService } from "@/services/IndicatorService";
+import { useAddIndicatorModalViewModel } from "@/viewmodels/modals/useAddIndicatorModalViewModel";
 import { useIndicatorsViewModel } from "@/viewmodels/useIndicatorsViewModel";
 
 export default function Dashboard() {
@@ -43,25 +44,28 @@ export default function Dashboard() {
   const editWeightsModalViewModel =
     useEditWeightsModalViewModel(indicatorsService);
   const addIndicatorModalViewModel = useAddIndicatorModalViewModel();
+  const addIndicatorDataModal =
+    useAddIndicatorDataModalViewModel(indicatorsService);
   const confirmModalViewModel = useConfirmModalViewModel("Tem certeza?");
 
   // Passando os ViewModels para o hook de indicadores
   const indicatorsViewModel = useIndicatorsViewModel(
     editWeightsModalViewModel,
     addIndicatorModalViewModel,
+    addIndicatorDataModal,
     confirmModalViewModel
   );
 
   let content = null;
   switch (sidebarViewModel.selectedPage) {
     case "ranking":
-      content = <RankingView {...rankingViewModel} />;
+      content = <RankingView key="ranking-tab" {...rankingViewModel} />;
       break;
     case "drivers":
-      content = <DriverView {...driverViewModel} />;
+      content = <DriverView key="drivers-tab" {...driverViewModel} />;
       break;
     case "indicators":
-      content = <IndicatorsView {...indicatorsViewModel} />; // Passando o viewModel para IndicatorsView
+      content = <IndicatorsView key="indicators-tab" {...indicatorsViewModel} />;
       break;
     default:
       content = null;

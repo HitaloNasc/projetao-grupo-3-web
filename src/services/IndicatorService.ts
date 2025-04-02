@@ -40,6 +40,21 @@ export class IndicatorService implements IIndicatorService {
     await Promise.all(promises);
   }
 
+  async addIndicatorsData(form: any, callback: () => void): Promise<any> {
+    const { file } = form;
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await client.post("/rankings/update_rankings", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    callback();
+    return res.data;
+  }
+
   async deleteIndicator(indicatorId: number): Promise<void> {
     await client.delete(`/indicators/${indicatorId}`);
   }

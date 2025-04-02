@@ -1,15 +1,17 @@
-import {EditWeightsModal} from '@/components/modals/EditWeightsModal';import {AddIndicatorModal} from '@/components/modals/AddIndicatorModal';
-import {ConfirmModal} from '@/components/modals/ConfirmModal';
-import {DynamicList} from '@/components/ui/DynamicList';
-import Loading from '@/components/ui/Loading';
-import {Page} from '@/components/ui/Page';
-import {Indicator} from '@/models/Indicator';
-import {IIndicatorViewModel} from '@/viewmodels/useIndicatorsViewModel';
-import Image from 'next/image';
-import Pencil from '../../../public/icons/pencil.svg';
-import Plus from '../../../public/icons/plus.svg';
-import Trash from '../../../public/icons/trash.svg';
-import styles from './IndicatorsView.module.css';
+import { EditWeightsModal } from "@/components/modals/EditWeightsModal";
+import { AddIndicatorModal } from "@/components/modals/AddIndicatorModal";
+import { ConfirmModal } from "@/components/modals/ConfirmModal";
+import { DynamicList } from "@/components/ui/DynamicList";
+import Loading from "@/components/ui/Loading";
+import { Page } from "@/components/ui/Page";
+import { Indicator } from "@/models/Indicator";
+import { IIndicatorViewModel } from "@/viewmodels/useIndicatorsViewModel";
+import Image from "next/image";
+import Pencil from "../../../public/icons/pencil.svg";
+import Plus from "../../../public/icons/plus.svg";
+import Trash from "../../../public/icons/trash.svg";
+import styles from "./IndicatorsView.module.css";
+import { AddIndicatorDataModal } from "@/components/modals/AddIndicatorData";
 
 export function IndicatorsView({
   indicators,
@@ -19,6 +21,7 @@ export function IndicatorsView({
   handleDeleteIndicator,
   EditWeightsModalProps,
   AddIndicatorModalProps,
+  AddIndicatorDataModalProps,
   ConfirmModalProps,
 }: IIndicatorViewModel) {
   const renderButtons = () => (
@@ -36,8 +39,15 @@ export function IndicatorsView({
           )
         }
       >
-        <Image src={Pencil} alt='Editar Pesos' />
+        <Image src={Pencil} alt="Editar Pesos" />
         Editar Pesos
+      </button>
+      <button
+        className={styles.addButton}
+        onClick={() => AddIndicatorDataModalProps.handleOpenModal()}
+      >
+        <Image src={Plus} alt="Adicionar Dados" />
+        Adicionar Dados
       </button>
       <button
         className={styles.addButton}
@@ -45,7 +55,7 @@ export function IndicatorsView({
           AddIndicatorModalProps.handleOpenModal(handleAddIndicator)
         }
       >
-        <Image src={Plus} alt='Adicionar indicador' />
+        <Image src={Plus} alt="Adicionar indicador" />
         Adicionar Indicador
       </button>
     </div>
@@ -59,7 +69,7 @@ export function IndicatorsView({
           AddIndicatorModalProps.handleOpenModal(handleEditIndicator, indicator)
         }
       >
-        <Image src={Pencil} alt='Editar' />
+        <Image src={Pencil} alt="Editar" />
       </div>
       <div
         className={styles.deleteButton}
@@ -69,16 +79,16 @@ export function IndicatorsView({
           )
         }
       >
-        <Image src={Trash} alt='Excluir' />
+        <Image src={Trash} alt="Excluir" />
       </div>
     </div>
   );
 
   const columns = [
-    {key: 'name', header: 'Nome'},
-    {key: 'description', header: 'Descrição'},
-    {key: 'weight', header: 'Peso'},
-    {key: 'actions', header: 'Ações'},
+    { key: "name", header: "Nome" },
+    { key: "description", header: "Descrição" },
+    { key: "weight", header: "Peso" },
+    { key: "actions", header: "Ações" },
   ];
 
   const data = indicators?.map((indicator) => ({
@@ -88,10 +98,10 @@ export function IndicatorsView({
     actions: renderActions(indicator),
   }));
 
-  if (loading) {
+  if (loading || AddIndicatorDataModalProps.loading) {
     return (
-      <div className='d-flex justify-content-center align-items-center h-100'>
-        <Loading color='dark' />
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <Loading color="dark" />
       </div>
     );
   }
@@ -105,6 +115,7 @@ export function IndicatorsView({
       <DynamicList columns={columns} data={data} />
       <EditWeightsModal {...EditWeightsModalProps} />
       <AddIndicatorModal {...AddIndicatorModalProps} />
+      <AddIndicatorDataModal {...AddIndicatorDataModalProps} />
       <ConfirmModal {...ConfirmModalProps} />
     </Page>
   );

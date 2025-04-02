@@ -1,4 +1,4 @@
-import {IAddIndicatorModalViewModel} from '@/viewmodels/modals/useAddIndicatorModalViewModel';
+import {IAddIndicatorModalViewModel} from '@/viewmodels/modals/useAddIndicatorDataModalViewModel';
 import {Button, Form, Modal} from 'react-bootstrap';
 import styles from './AddIndicatorModal.module.css';
 

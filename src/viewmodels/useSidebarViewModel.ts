@@ -20,16 +20,19 @@ export function useSidebarViewModel(
 
   const initialized = useRef(false);
 
-  // Função de set que também atualiza a URL
+  // Define a página atual e atualiza a URL antes de recarregar
   const setSelectedPage = (page: string) => {
     setSelectedPageState(page);
+
     const currentTab = searchParams.get("tab");
     if (currentTab !== page) {
-      router.replace(`/dashboard?tab=${page}`);
+      // Atualiza explicitamente a URL antes do reload
+      window.history.replaceState({}, "", `/dashboard?tab=${page}`);
+      if (page === "ranking") window.location.reload();
     }
   };
 
-  // Autenticação (mantém)
+  // Verifica se o usuário está logado
   useEffect(() => {
     const loggedUser = authService.getLoggedUser();
     if (!loggedUser) {
@@ -40,7 +43,7 @@ export function useSidebarViewModel(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Leitura do parâmetro da URL (apenas uma vez)
+  // Lê a aba da URL na primeira montagem
   useEffect(() => {
     if (initialized.current) return;
 
@@ -48,7 +51,6 @@ export function useSidebarViewModel(
     if (tab) {
       setSelectedPageState(tab);
     }
-
     initialized.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
