@@ -84,7 +84,7 @@ export function IndicatorsView({
   const data = indicators?.map((indicator) => ({
     name: indicator.name,
     description: indicator.description,
-    weight: `${indicator.value}%`,
+    weight: `${indicator.weight * 100}%`,
     actions: renderActions(indicator),
   }));
 

@@ -45,8 +45,6 @@ export function useLoginViewModel(authService: IAuthService) {
     try {
       const loggedUser = await authService.login({ email, password });
       setUser(loggedUser);
-      console.log("loggedUser", loggedUser);
-      
       if (loggedUser?.role === "admin") router.replace("/dashboard");
       if (loggedUser?.role === "user") router.replace("/dashboard-drivers");
     } catch (err: any) {

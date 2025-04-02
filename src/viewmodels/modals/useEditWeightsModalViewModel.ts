@@ -1,6 +1,6 @@
-import {useState} from 'react';
-import {Indicator} from '@/models/Indicator';
-import {IndicatorService} from '@/services/IndicatorService';
+import { useState } from "react";
+import { Indicator } from "@/models/Indicator";
+import { IndicatorService } from "@/services/IndicatorService";
 
 export interface IEditWeightsModalViewModel {
   handleOpenModal: (
@@ -14,14 +14,14 @@ export interface IEditWeightsModalViewModel {
   showModal: boolean;
 }
 
-export function useEditWeightsModalViewModel() {
+export function useEditWeightsModalViewModel(
+  indicatorService: IndicatorService
+): IEditWeightsModalViewModel {
   const [showModal, setShowModal] = useState(false);
   const [indicators, setIndicators] = useState<Indicator[]>([]);
   const [callback, setCallback] = useState<(weights: Indicator[]) => void>(
     () => () => {}
   );
-
-  const indicatorService = new IndicatorService();
 
   const handleOpenModal = (
     indicators: Indicator[],
@@ -40,20 +40,27 @@ export function useEditWeightsModalViewModel() {
     setIndicators((prevIndicators) => {
       return prevIndicators.map((indicator) =>
         indicator.id === id
-          ? {...indicator, value: Math.max(0, indicator.value + delta)}
+          ? { ...indicator, weight: Math.max(0, indicator.weight + delta) }
           : indicator
       );
     });
   };
 
   const handleSubmit = async (updatedIndicators: Indicator[]) => {
-    const totalWeight = updatedIndicators.reduce(
-      (sum, ind) => sum + ind.value,
+    const normalizedIndicators = updatedIndicators.map((indicator) => ({
+      ...indicator,
+      weight: parseFloat(indicator.weight.toFixed(2)),
+    }));
+
+    const totalWeight = normalizedIndicators.reduce(
+      (sum, ind) => sum + ind.weight,
       0
     );
 
-    if (totalWeight !== 100) {
-      alert('A soma dos pesos deve ser exatamente 100%.');
+    console.log("Total Weight:", totalWeight);
+
+    if (totalWeight !== 1) {
+      // alert("A soma dos pesos deve ser exatamente 100%.");
       return;
     }
 
@@ -66,8 +73,9 @@ export function useEditWeightsModalViewModel() {
       callback(refreshedIndicators);
 
       handleCloseModal();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      alert(`Erro ao atualizar os pesos dos indicadores: ${error}`);
+      // alert(`Erro ao atualizar os pesos dos indicadores: ${error}`);
     }
   };
 

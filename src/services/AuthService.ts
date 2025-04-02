@@ -37,7 +37,6 @@ export class AuthService {
 
   getLoggedUser(): User | null {
     const storedUser = Cookies.get("user");
-    console.log("Stored user:", storedUser);
 
     const parsed = storedUser ? JSON.parse(storedUser) : null;
     if (parsed)

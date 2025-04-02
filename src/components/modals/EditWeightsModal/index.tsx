@@ -1,9 +1,9 @@
-import {IEditWeightsModalViewModel} from '@/viewmodels/modals/useEditWeightsModalViewModel';
-import {Button, Modal} from 'react-bootstrap';
-import styles from './EditWeightsModal.module.css';
-import Image from 'next/image';
-import Minus from '../../../../public/icons/minuscircle.svg';
-import Plus from '../../../../public/icons/pluscircle.svg';
+import { IEditWeightsModalViewModel } from "@/viewmodels/modals/useEditWeightsModalViewModel";
+import { Button, Modal } from "react-bootstrap";
+import styles from "./EditWeightsModal.module.css";
+import Image from "next/image";
+import Minus from "../../../../public/icons/minuscircle.svg";
+import Plus from "../../../../public/icons/pluscircle.svg";
 
 export function EditWeightsModal({
   handleSubmit,
@@ -13,18 +13,18 @@ export function EditWeightsModal({
   showModal,
 }: IEditWeightsModalViewModel) {
   const totalWeight = indicators.reduce(
-    (sum, indicator) => sum + indicator.value,
+    (sum, indicator) => sum + indicator.weight,
     0
   );
 
-  const isTotalValid = totalWeight === 100;
+  const isTotalValid = totalWeight === 1;
 
   const handleDecrease = (id: number) => () => {
-    handleChangeWeight(id, -10);
+    handleChangeWeight(id, -0.1);
   };
 
   const handleIncrease = (id: number) => () => {
-    handleChangeWeight(id, 10);
+    handleChangeWeight(id, 0.1);
   };
 
   return (
@@ -33,24 +33,30 @@ export function EditWeightsModal({
         <Modal.Title className={styles.modalTitle}>Editar Pesos</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <p className={styles.modalDescription}>
+          A soma dos pesos deve ser exatamente 100%. Você pode ajustar os pesos
+          conforme necessário.
+          <br />
+          <strong>Pesos atuais:</strong> {(totalWeight * 100).toFixed(0)}%
+        </p>
         {indicators.map((indicator) => (
           <div key={indicator.id} className={styles.indicatorRow}>
             <span>{indicator.name}</span>
             <div className={styles.weightControls}>
               <button
                 onClick={handleDecrease(indicator.id)}
-                disabled={indicator.value <= 0}
+                disabled={indicator.weight <= 0}
                 className={styles.iconButton}
               >
-                <Image src={Minus} alt='Diminuir' />
+                <Image src={Minus} alt="Diminuir" />
               </button>
-              <span>{indicator.value}%</span>
+              <span>{(indicator.weight * 100).toFixed(0)}%</span>
               <button
                 onClick={handleIncrease(indicator.id)}
                 disabled={totalWeight + 10 > 100}
                 className={styles.iconButton}
               >
-                <Image src={Plus} alt='Aumentar' />
+                <Image src={Plus} alt="Aumentar" />
               </button>
             </div>
           </div>
@@ -58,7 +64,7 @@ export function EditWeightsModal({
       </Modal.Body>
       <Modal.Footer>
         <Button
-          variant='outline-light'
+          variant="outline-light"
           className={styles.cancelButton}
           onClick={handleCloseModal}
         >

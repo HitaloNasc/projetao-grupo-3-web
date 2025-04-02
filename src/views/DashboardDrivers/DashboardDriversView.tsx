@@ -17,9 +17,7 @@ export function DashboardDriversView({
   selectedDriver,
   handleOpenModal,
   handleCloseModal,
-  logout = () => {
-    console.log("Logout");
-  },
+  logout,
 }: IDashboardDriversViewModel) {
   const renderDriver = (name: string) => {
     return (

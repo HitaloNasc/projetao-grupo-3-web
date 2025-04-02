@@ -29,9 +29,9 @@ export function useAddEditDriverModalViewModel() {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState<DriverForm>(initForm);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [callback, setCallback] = useState<
-    (driver: DriverForm) => void
-  >(() => Promise.resolve());
+  const [callback, setCallback] = useState<(driver: DriverForm) => void>(() =>
+    Promise.resolve()
+  );
 
   function maskCPF(value: string): string {
     return value
@@ -67,10 +67,7 @@ export function useAddEditDriverModalViewModel() {
     )}`;
   }
 
-  const handleOpenModal = (
-    callback: (d: DriverForm) => void,
-    driver?: any
-  ) => {
+  const handleOpenModal = (callback: (d: DriverForm) => void, driver?: any) => {
     setCallback(() => callback);
     setForm(driver);
     setShowModal(true);
@@ -121,10 +118,7 @@ export function useAddEditDriverModalViewModel() {
   }
 
   const handleSubmit = (driver: DriverForm) => {
-    console.log("handleSubmit");
-
     if (!validateForm()) return;
-    console.log("callback", { callback });
     callback(driver);
     handleCloseModal();
   };

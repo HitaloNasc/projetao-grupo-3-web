@@ -1,6 +1,7 @@
-export type Indicator = {  id: number;
+export type Indicator = {
+  id: number;
   name: string;
-  value: number;
+  weight: number;
   description: string;
   created_at: string;
   updated_at: string;
