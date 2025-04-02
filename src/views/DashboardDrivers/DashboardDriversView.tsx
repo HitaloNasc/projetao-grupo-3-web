@@ -69,20 +69,20 @@ export function DashboardDriversView({
         <Image src={Logout} alt="Logout" />
       </div>
       <main className={styles.main}>
-        {renderDriver(ranking.name)}
+        {renderDriver(ranking?.name || "")}
 
         <h2 className={styles.title}>Ranking atual</h2>
 
-        <Position>{ranking.position}°</Position>
+        <Position>{ranking?.position}°</Position>
 
         <p>
-          Você está na <strong>{ranking.position}ª posição</strong>
+          Você está com <strong>{ranking?.score} pontos</strong>
         </p>
 
         <p>
-          {ranking.position !== 1
+          {ranking?.position !== 1
             ? "Faltam " +
-              ranking.pointsToNextPosition +
+              ranking?.pointsToNextPosition +
               " pontos para você alcançar a 3ª posição."
             : "Você está liderando o grupo, parabéns!"}
         </p>
@@ -95,10 +95,10 @@ export function DashboardDriversView({
           Ver indicadores
         </button>
 
-        <p>
+        {/* <p>
           Na última atualização, você ocupava a {ranking.lastRakingPosition}ª
           posição do ranking.
-        </p>
+        </p> */}
       </main>
       {renderModal()}
     </Page>

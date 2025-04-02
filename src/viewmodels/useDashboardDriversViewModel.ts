@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export interface IDashboardDriversViewModel {
-  ranking: DashboardDriversRanking;
+  ranking: DashboardDriversRanking | null;
   loading: boolean;
   showModal: boolean;
   selectedDriver: Ranking | null;
@@ -20,31 +20,7 @@ export function useDashboardDriversViewModel(
   rankingService: IRankingService,
   authService: IAuthService
 ): IDashboardDriversViewModel {
-  const [ranking, setRankings] = useState<DashboardDriversRanking>({
-    id: "id",
-    name: "João Gomes",
-    score: 100,
-    position: 1,
-    pointsToNextPosition: 20,
-    lastRakingPosition: 5,
-    indicators: [
-      {
-        id: "id1",
-        name: "Melhor volta",
-        value: 30,
-      },
-      {
-        id: "id2",
-        name: "Volta mais rápida",
-        value: 40,
-      },
-      {
-        id: "id3",
-        name: "Volta mais lenta",
-        value: 30,
-      },
-    ],
-  });
+  const [ranking, setRankings] = useState<DashboardDriversRanking | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -58,6 +34,8 @@ export function useDashboardDriversViewModel(
     setError("");
 
     try {
+      console.log(currentUser);
+
       const ranking = await rankingService.getRanking(currentUser?.id || "");
       setRankings(ranking);
     } catch (err: any) {
