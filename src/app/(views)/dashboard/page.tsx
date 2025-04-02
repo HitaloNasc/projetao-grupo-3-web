@@ -20,8 +20,9 @@ import { useEditWeightsModalViewModel } from "@/viewmodels/modals/useEditWeights
 import { IndicatorService } from "@/services/IndicatorService";
 import { useAddIndicatorModalViewModel } from "@/viewmodels/modals/useAddIndicatorModalViewModel";
 import { useIndicatorsViewModel } from "@/viewmodels/useIndicatorsViewModel";
+import { Suspense } from "react";
 
-export default function Dashboard() {
+function DashboardCSR() {
   const authService = new AuthService();
   const rankingService = new RankingService();
   const driverService = new DriverService();
@@ -65,7 +66,9 @@ export default function Dashboard() {
       content = <DriverView key="drivers-tab" {...driverViewModel} />;
       break;
     case "indicators":
-      content = <IndicatorsView key="indicators-tab" {...indicatorsViewModel} />;
+      content = (
+        <IndicatorsView key="indicators-tab" {...indicatorsViewModel} />
+      );
       break;
     default:
       content = null;
@@ -73,4 +76,12 @@ export default function Dashboard() {
   }
 
   return <Sidebar viewModel={sidebarViewModel}>{content}</Sidebar>;
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardCSR />
+    </Suspense>
+  );
 }
