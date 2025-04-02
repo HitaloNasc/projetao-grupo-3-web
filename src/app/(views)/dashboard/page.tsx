@@ -1,15 +1,22 @@
-"use client";
-import { Sidebar } from "@/components/ui/Sidebar";
-import { AuthService } from "@/services/AuthService";
-import { DriverService } from "@/services/DriverService";
-import { RankingService } from "@/services/RankingService";
-import { useAddEditDriverModalViewModel } from "@/viewmodels/modals/useAddEditDriverModalViewModel";
-import { useConfirmModalViewModel } from "@/viewmodels/modals/useConfirmModalViewModel";
-import { useDriverViewModel } from "@/viewmodels/useDriverViewModel";
-import { useRankingViewModel } from "@/viewmodels/useRankingViewModel";
-import { useSidebarViewModel } from "@/viewmodels/useSidebarViewModel";
-import { DriverView } from "@/views/Driver/DriverView";
-import { RankingView } from "@/views/Ranking/RankingView";
+'use client';import {Sidebar} from '@/components/ui/Sidebar';
+import {AuthService} from '@/services/AuthService';
+import {DriverService} from '@/services/DriverService';
+import {RankingService} from '@/services/RankingService';
+import {useAddEditDriverModalViewModel} from '@/viewmodels/modals/useAddEditDriverModalViewModel';
+import {useConfirmModalViewModel} from '@/viewmodels/modals/useConfirmModalViewModel';
+import {useDriverViewModel} from '@/viewmodels/useDriverViewModel';
+import {useRankingViewModel} from '@/viewmodels/useRankingViewModel';
+import {useSidebarViewModel} from '@/viewmodels/useSidebarViewModel';
+import {DriverView} from '@/views/Driver/DriverView';
+import {RankingView} from '@/views/Ranking/RankingView';
+import {IndicatorsView} from '@/views/Indicators/IndicatorsView';
+
+// Importando os ViewModels dos modais
+import {useEditWeightsModalViewModel} from '@/viewmodels/modals/useEditWeightsModalViewModel';
+import {useAddIndicatorModalViewModel} from '@/viewmodels/modals/useAddIndicatorModalViewModel';
+
+// Importando o hook de indicadores
+import {useIndicatorsViewModel} from '@/viewmodels/useIndicatorsViewModel';
 
 export default function Dashboard() {
   const authService = new AuthService();
@@ -18,7 +25,7 @@ export default function Dashboard() {
 
   const addEditDriverModalViewModel = useAddEditDriverModalViewModel();
   const confirmModalDriverViewModel = useConfirmModalViewModel(
-    "Tem certeza que deseja excluir este motorista?"
+    'Tem certeza que deseja excluir este motorista?'
   );
 
   const sidebarViewModel = useSidebarViewModel(authService);
@@ -29,16 +36,28 @@ export default function Dashboard() {
     confirmModalDriverViewModel
   );
 
+  // Usando os ViewModels necessários para indicadores
+  const editWeightsModalViewModel = useEditWeightsModalViewModel();
+  const addIndicatorModalViewModel = useAddIndicatorModalViewModel();
+  const confirmModalViewModel = useConfirmModalViewModel('Tem certeza?');
+
+  // Passando os ViewModels para o hook de indicadores
+  const indicatorsViewModel = useIndicatorsViewModel(
+    editWeightsModalViewModel,
+    addIndicatorModalViewModel,
+    confirmModalViewModel
+  );
+
   let content = null;
   switch (sidebarViewModel.selectedPage) {
-    case "ranking":
+    case 'ranking':
       content = <RankingView {...rankingViewModel} />;
       break;
-    case "drivers":
+    case 'drivers':
       content = <DriverView {...driverViewModel} />;
       break;
-    case "indicators":
-      content = null;
+    case 'indicators':
+      content = <IndicatorsView {...indicatorsViewModel} />; // Passando o viewModel para IndicatorsView
       break;
     default:
       content = null;
