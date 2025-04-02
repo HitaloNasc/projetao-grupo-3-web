@@ -1,3 +1,4 @@
+import { AuthService } from "@/services/AuthService";
 import axios from "axios";
 
 export const client = axios.create({
@@ -6,12 +7,12 @@ export const client = axios.create({
 });
 
 client.interceptors.request.use((config) => {
-  const storedUser = localStorage.getItem("user");
+  const authService = new AuthService();
+  const storedUser = authService.getLoggedUser();
 
   if (storedUser) {
-    const user = JSON.parse(storedUser);
     if (config.headers) {
-      config.headers.Authorization = `Bearer ${user.token}`;
+      config.headers.Authorization = `Bearer ${storedUser.token}`;
     }
   }
 

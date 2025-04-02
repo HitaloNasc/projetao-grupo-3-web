@@ -16,12 +16,18 @@ export interface IAuthService {
 export class AuthService {
   async login({ email, password }: ILoginParams): Promise<User> {
     try {
-      const res = await client.post<User>("/login", { email, password });
+      const res = await client.post<{ token: string; user: User }>(
+        "/auth/login",
+        { email, password }
+      );
       const user = res.data;
 
       Cookies.set("user", JSON.stringify(user), { expires: 1 });
 
-      return user;
+      return {
+        ...user.user,
+        token: user.token,
+      };
     } catch (error: any) {
       const message = error.response?.data?.message || "Erro de autenticação";
       throw new Error(message);
