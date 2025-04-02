@@ -189,6 +189,36 @@ const db = {
       updatedAt: new Date(),
     },
   ],
+  indicators: [
+    {
+      id: "mock-id-1",
+      name: "indicator1",
+      description: "description1",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "mock-id-2",
+      name: "indicator2",
+      description: "description2",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "mock-id-3",
+      name: "indicator3",
+      description: "description3",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "mock-id-4",
+      name: "indicator4",
+      description: "description4",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ],
 };
 
 app.use(express.json());
@@ -345,13 +375,49 @@ app.delete('/drivers/:id', (req, res) => {
   return res.status(200).send();
 });
 
-app.delete('/indicators/:id', (req, res) => {
-  const {id} = req.params;
+app.get("/indicators", (req, res) => {
+  return res.status(200).json(db.indicators);
+});
+
+app.post("/indicators", (req, res) => {
+  const { name, description } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ error: "Name is required" });
+  }
+
+  if (!description) {
+    return res.status(400).json({ error: "Description is required" });
+  }
+
+  const create = {
+    id: "mock-id-" + db.indicators.length + 1,
+    name,
+    description,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  db.indicators.push(create);
+
+  return res.status(201).json(create);
+});
+
+app.delete("/indicators/:id", (req, res) => {
+  const { id } = req.params;
+
+  const indicator = db.indicators.find((indicator) => indicator.id === id);
+
+  if (!indicator) {
+    return res.status(404).json({ error: "Indicator not found" });
+  }
 
   db.indicators = db.indicators.filter((indicator) => indicator.id !== id);
 
-  res.status(204).send();
+  return res.status(200).send();
 });
+
+
 
 app.put('/indicators/:id', (req, res) => {
   const {id} = req.params;

@@ -16,13 +16,20 @@ export interface IAuthService {
 export class AuthService {
   async login({ email, password }: ILoginParams): Promise<User> {
     try {
-      const res = await client.post<User>("/login", { email, password });
+      const res = await client.post<{ token: string; user: User }>(
+        "/auth/login",
+        { email, password }
+      );
       const user = res.data;
 
       Cookies.set("user", JSON.stringify(user), { expires: 1 });
 
-      return user;
+      return {
+        ...user.user,
+        token: user.token,
+      };
     } catch (error: any) {
+      console.error("Erro ao fazer login:", error);
       const message = error.response?.data?.message || "Erro de autenticação";
       throw new Error(message);
     }
@@ -30,7 +37,16 @@ export class AuthService {
 
   getLoggedUser(): User | null {
     const storedUser = Cookies.get("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    console.log("Stored user:", storedUser);
+
+    const parsed = storedUser ? JSON.parse(storedUser) : null;
+    if (parsed)
+      return {
+        ...parsed.user,
+        token: parsed.token,
+      };
+
+    return null;
   }
 
   logout() {

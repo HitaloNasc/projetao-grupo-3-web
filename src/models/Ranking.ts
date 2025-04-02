@@ -5,7 +5,7 @@ export type RankingIndicator = {
 };
 
 export type Ranking = {
-  id: number;
+  id: string;
   name: string;
   score: number;
   position: number;
