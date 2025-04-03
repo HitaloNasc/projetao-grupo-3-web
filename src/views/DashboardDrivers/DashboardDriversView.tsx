@@ -81,7 +81,9 @@ export function DashboardDriversView({
           {ranking?.position !== 1
             ? "Faltam " +
               ranking?.pointsToNextPosition +
-              " pontos para você alcançar a 3ª posição."
+              `pontos para você alcançar a ${
+                ranking?.position ? ranking?.position - 1 : 0
+              }ª posição.`
             : "Você está liderando o grupo, parabéns!"}
         </p>
 
