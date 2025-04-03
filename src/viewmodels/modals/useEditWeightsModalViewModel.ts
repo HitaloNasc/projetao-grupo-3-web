@@ -40,7 +40,7 @@ export function useEditWeightsModalViewModel(
     setIndicators((prevIndicators) => {
       return prevIndicators.map((indicator) =>
         indicator.id === id
-          ? { ...indicator, weight: Math.max(0, indicator.weight + delta) }
+          ? { ...indicator, weight: parseFloat((Math.max(0, indicator.weight + delta)).toFixed(2)) }
           : indicator
       );
     });
