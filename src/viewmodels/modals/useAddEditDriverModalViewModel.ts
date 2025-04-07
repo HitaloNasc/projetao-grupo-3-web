@@ -70,8 +70,6 @@ export function useAddEditDriverModalViewModel() {
   const handleOpenModal = (callback: (d: DriverForm) => void, driver?: any) => {
     setCallback(() => callback);
     setForm(driver);
-    console.log({ driver });
-
     setShowModal(true);
   };
 

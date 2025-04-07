@@ -102,7 +102,9 @@ export function AddEditDriverModal({
         </Button>
         <Button
           className={styles.saveButton}
-          onClick={() => handleSubmit(form)}
+          onClick={() => {
+            handleSubmit(form);
+          }}
         >
           Salvar
         </Button>

@@ -4,7 +4,7 @@ import { Position } from "@/components/ui/Position";
 import { Ranking, RankingIndicator } from "@/models/Ranking";
 import { IRankingViewModel } from "@/viewmodels/useRankingViewModel";
 import Image from "next/image";
-import { Modal } from "react-bootstrap";
+import { Modal, OverlayTrigger, Popover } from "react-bootstrap";
 import Avatar from "../../../public/avatars/21.svg";
 import Eye from "../../../public/icons/eye.svg";
 import styles from "./RankingView.module.css";
@@ -59,10 +59,28 @@ export function RankingView({
           <div className={styles.modalContent}>
             {selectedDriver?.indicators?.map(
               (indicator: RankingIndicator, idx: number) => (
-                <span key={idx}>
-                  <p>{indicator.name}</p>
-                  <p>{indicator.value}</p>
-                </span>
+                <div className={styles.modalContainer} key={idx}>
+                  <span className={styles.line}>
+                    <p>{indicator.name}</p>
+                    <p>
+                      <strong>{indicator.value}</strong>
+                    </p>
+                  </span>
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="top-end"
+                    overlay={
+                      <Popover id={"indicator-" + idx}>
+                        <Popover.Body>{indicator.description}</Popover.Body>
+                      </Popover>
+                    }
+                  >
+                    <div className={styles.popover}>
+                      <p>?</p>
+                    </div>
+                  </OverlayTrigger>
+                </div>
               )
             )}
           </div>

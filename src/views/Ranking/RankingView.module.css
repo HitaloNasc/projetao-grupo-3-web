@@ -50,14 +50,39 @@
   gap: 2rem;
 }
 
-.modalContent span {
+.modalContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3rem;
+  gap: 1rem;
+}
+
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  width: 80%;
 }
 
 .modalContent p {
   margin: 0;
+}
+
+.popover {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 1rem;
+  width: 1rem;
+  background-color: var(--primary);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  border-radius: 50px;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 3rem;
 }

@@ -59,6 +59,7 @@ export function DriverView({
     { key: "cpf", header: "CPF" },
     { key: "email", header: "Email" },
     { key: "phone", header: "Telefone" },
+    { key: "branch", header: "Filial" },
     { key: "actions", header: "Ações" },
   ];
 
@@ -67,6 +68,7 @@ export function DriverView({
     cpf: driver.cpf,
     email: driver.email,
     phone: driver.phone,
+    branch: driver.branch,
     actions: renderActions(driver),
   }));
 

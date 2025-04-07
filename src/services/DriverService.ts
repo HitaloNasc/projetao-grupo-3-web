@@ -21,7 +21,8 @@ export class DriverService {
   }
 
   async updateDriver(driver: DriverForm): Promise<Driver> {
-    const res = await client.patch<Driver>(`/drivers/${driver.id}`, driver);
+    // @ts-expect-error: driver may have either 'id' or '_id' depending on the source
+    const res = await client.patch<Driver>(`/drivers/${driver.id ?? driver._id}`, driver);
     return res.data;
   }
 
